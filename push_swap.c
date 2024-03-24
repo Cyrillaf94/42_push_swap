@@ -6,7 +6,7 @@
 /*   By: cyril <cyril@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 23:41:44 by cyril             #+#    #+#             */
-/*   Updated: 2024/03/23 11:25:47 by cyril            ###   ########.fr       */
+/*   Updated: 2024/03/24 12:33:22 by cyril            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,14 +31,14 @@ void	ft_push(node_t **list_from, node_t **list_to)
 	insert_node_tail(list_to, node);
 }
 
-node_t	**ft_rotate(node_t **head)
+node_t	*ft_rotate(node_t **head)
 // For ra rb
 {
-	return (&(*head)->next);
+	return ((*head)->next);
 }
 
-node_t	**ft_reverse_rotate(node_t **head)
+node_t	*ft_reverse_rotate(node_t **head)
 // For rra rrb
 {
-	return (&(*head)->prev);
+	return ((*head)->prev);
 }
