@@ -1,12 +1,12 @@
 /* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
+/*																			*/
+/*		                                                :::      ::::::::   */
 /*   push_swap_node.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cyril <cyril@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 23:51:28 by cyril             #+#    #+#             */
-/*   Updated: 2024/03/23 13:19:39 by cyril            ###   ########.fr       */
+/*   Updated: 2024/04/01 18:05:06 by cyril            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,23 +27,21 @@ node_t	*create_node(int data)
 
 void	insert_node_tail(node_t **head, node_t *new_node)
 {
-	node_t	*prev_tail;
-	if (head && new_node)
+	node_t *tail;
+
+	if (!(*head))
 	{
-		if (!*head || !(*head)->next)
-		{
-			*head = new_node;
-			new_node->next = new_node;
-			new_node->prev = new_node;
-		}
-		else
-		{
-			prev_tail =  (*head)->prev;
-			(*head)->prev = new_node;
-			prev_tail->next = new_node;
-			new_node->next = *head;
-			new_node->prev = prev_tail;
-		}
+		*head = new_node;
+		new_node->next = new_node;
+		new_node->prev = new_node;
+	}
+	else
+	{
+		tail = (*head)->prev;
+		tail->next = new_node;
+		new_node->prev = tail;
+		new_node->next = *head;
+		(*head)->prev = new_node;
 	}
 }
 
@@ -51,14 +49,20 @@ node_t	*remove_node(node_t **head)
 {
 	node_t	*temp;
 	
-	if (!*head | (*head)->next == *head)
-		head == NULL;
+	if (!head || !*head)
+		return (NULL);
+	if ((*head)->next == *head)
+	{
+		temp = *head;
+		*head = NULL;
+	}	
 	else
 	{
 		temp = (*head)->prev;
 		(*head)->prev = temp->prev;
 		temp->prev->next = *head;
 	}
+	temp->next = temp->prev = NULL;
 	return (temp);
 }
 
@@ -77,13 +81,13 @@ int	ft_list_size(node_t *node)
 	return (i);
 }
 
-void	ft_lstclear(node_t **head)
+void	ft_lstclear(node_t *head)
 {
 	node_t	*current;
 	
-	if (*head)
+	if (head)
 	{
-		current = *head;
+		current = head;
 		current->prev->next = NULL;
 		while (current->next)
 		{

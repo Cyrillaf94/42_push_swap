@@ -1,25 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   push_swap.c                                        :+:      :+:    :+:   */
+/*   intructions.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cyril <cyril@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 23:41:44 by cyril             #+#    #+#             */
-/*   Updated: 2024/03/24 12:33:22 by cyril            ###   ########.fr       */
+/*   Updated: 2024/04/01 18:49:38 by cyril            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void	ft_swap(node_t **head)
+void	ft_swap(node_t *head)
 // For sa sb
 {
 	int	temp;
 	
-	temp = (*head)->prev->data;
-	(*head)->prev->data = (*head)->prev->prev->data;
-	(*head)->prev->prev->data = temp;	
+	temp = head->prev->data;
+	head->prev->data = head->prev->prev->data;
+	head->prev->prev->data = temp;	
 }
 
 void	ft_push(node_t **list_from, node_t **list_to)
@@ -34,11 +34,13 @@ void	ft_push(node_t **list_from, node_t **list_to)
 node_t	*ft_rotate(node_t **head)
 // For ra rb
 {
-	return ((*head)->next);
+	*head = (*head)->next;
+	return (*head);
 }
 
 node_t	*ft_reverse_rotate(node_t **head)
 // For rra rrb
 {
-	return ((*head)->prev);
+	*head = (*head)->prev;
+	return (*head);
 }

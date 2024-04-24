@@ -47,8 +47,6 @@ node_t	*parse_list(int argc, char	**argv)
 		value = ft_atoi(argv[argn]);
 		node = create_node(value);
 		insert_node_tail(&head, node);
-		if (head == NULL)
-			head = node;		
 		argn++;
 	}
 	return (head);
