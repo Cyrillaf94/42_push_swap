@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sort.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cyril <cyril@student.42.fr>                +#+  +:+       +#+        */
+/*   By: claferri <claferri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 09:18:46 by cyril             #+#    #+#             */
-/*   Updated: 2024/04/28 21:38:01 by cyril            ###   ########.fr       */
+/*   Updated: 2024/05/01 17:55:19 by claferri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,60 +59,40 @@ node_t	*sort_three(node_t *head)
 // --> The index is enough
 // Distance to index 0 is min(index, len(list) - index + 1)
 
+
+/* 
+	Find the corrrect position in an ordered circular list (decreasing order)
+	(N.B. Head is not necessarily at min value)
+	Return the index of the item the value should precede (e.g. at the start of the list returns 0)
+*/
 int	find_index(node_t *head, int value)
-// Find the corrrect position in an ordered circular list (decreasing order)
-// (N.B. Head is not necessarily at min value)
-// Return the index of the item you will precede (e.g. at the start of the list returns 0)
 {
 	node_t	*current;
 	node_t	*temp;
 	int	index;
 	int max_index;
 
-
-	// Protection for empty list
 	if (!head || head->next == head)
 		return (0);
 	index = 0;
 	current = head;
-	// move cursor to max
 	max_index = find_max(head);
 	while (max_index--)
 	{
 		current = current->next;
 		index++;
 	}
-	// If multiple items with same value, go to the earliest
 	while (current->data == current->prev->data && index--)
 		current = current->prev;
-	// Once you are at the 'top' value of the list, if you are outside the bounds of the list,
-	// you are in the right place 
-	// Otherwise, loop through the list to find the best position
 	if (!(current->data <= value || current->prev->data >= value))
 	{
-		while(!(value >= current->data))
-		{
-			index++;
+		while(!(value >= current->data) && ++index)
 			current = current->next;
-		}
 	}
 	index = index % ft_list_size(current);
 	return (index);
 }
 
-// Both list can shift in the same direction at the same time to avoid costing an extra move
-// Returns a negative number if the rotation is in reverse
-int	get_number_of_moves(int index_a, int index_b, int size_a, int size_b)
-{
-	int direction_1;
-	int	direction_2;
-
-	direction_1 = ft_max(index_a, index_b);
-	direction_2 = ft_min(size_a - index_a, size_b - index_b);
-	if (direction_1 < -direction_2)
-		return (direction_1);
-	return (direction_2);
-}
 
 move_t init_moves(int mov_ra, int mov_rb, int mov_rra, int mov_rrb)
 {

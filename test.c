@@ -3,8 +3,8 @@
 void test_find_index() {
     node_t *head = NULL;
 	int test_values[] = {-2, 0, 6, 8, 12};
-	int expected_index_2[] = {1, 1, 0, 0, 0, 0};
-	int expected_index_3[] = {1, 1, 0, 1, 1, 0};
+	int expected_index_2[] = {1, 1, 0, 0, 1};
+	int expected_index_3[] = {1, 1, 0, 2, 1};
 
     // Test empty list
 	printf("\nTest Empty List:\n");
@@ -14,7 +14,7 @@ void test_find_index() {
 	printf("\nTest List Len == 1:\n");
 	insert_node_tail(&head, create_node(2));
 	ft_list_print(head, 'T');
-	for (int i = 0; i < 4; i++)
+	for (int i = 0; i < 5; i++)
 		printf("Test Value %d: Expected Index = 0, Actual Index = %d\n",
 			test_values[i], find_index(head, test_values[i]));
 	
@@ -22,7 +22,7 @@ void test_find_index() {
 	printf("\nTest List Len == 2:\n");
 	insert_node_tail(&head, create_node(10));
 	ft_list_print(head, 'T');
-	for (int i = 0; i < 4; i++)
+	for (int i = 0; i < 5; i++)
 		printf("Test Value %d: Expected Index = %d, Actual Index = %d\n", test_values[i],
 			expected_index_2[i], find_index(head, test_values[i]));
 
@@ -30,7 +30,7 @@ void test_find_index() {
 	printf("\nTest List Len == 3:\n");
 	insert_node_tail(&head, create_node(8));
 	ft_list_print(head, 'T');
-	for (int i = 0; i < 4; i++)
+	for (int i = 0; i < 5; i++)
 		printf("Test Value %d: Expected Index = %d, Actual Index = %d\n", test_values[i],
 			expected_index_3[i], find_index(head, test_values[i]));
 	
@@ -63,4 +63,5 @@ void test_find_index() {
 int main()
 {
 	test_find_index();
+	return 1;
 }
