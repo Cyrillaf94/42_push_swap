@@ -18,6 +18,7 @@ void	ft_list_print(node_t *node, char c)
 }
 
 int	find_max(node_t *head)
+// Return the max index (if multiple max values, returns the greatest index)
 {
 	int i;
 	int max_index;
@@ -40,6 +41,7 @@ int	find_max(node_t *head)
 	}
 	return (max_index);
 }
+
 
 int	find_antepenultimate_max(node_t *head, int max_index)
 {
