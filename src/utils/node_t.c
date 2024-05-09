@@ -73,7 +73,7 @@ int	ft_list_size(node_t *node)
 
 	i = 0;
 	current = node;
-	while (current && (i==0 | current != node))
+	while (current && (i==0 || current != node))
 	{
 		i++;
 		current = current->next;
@@ -81,13 +81,13 @@ int	ft_list_size(node_t *node)
 	return (i);
 }
 
-void	ft_lstclear(node_t *head)
+void	ft_lstclear(node_t **head)
 {
 	node_t	*current;
 	
 	if (head)
 	{
-		current = head;
+		current = *head;
 		current->prev->next = NULL;
 		while (current->next)
 		{
@@ -95,6 +95,7 @@ void	ft_lstclear(node_t *head)
 			free(current->prev);
 		}
 		free(current);
+		*head = NULL;
 	}
 }
 

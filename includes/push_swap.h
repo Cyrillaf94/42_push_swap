@@ -6,7 +6,7 @@
 /*   By: cyril <cyril@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 23:41:54 by cyril             #+#    #+#             */
-/*   Updated: 2024/04/01 18:49:52 by cyril            ###   ########.fr       */
+/*   Updated: 2024/05/09 09:47:04 by cyril            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	insert_node_tail(node_t **head, node_t *new_node);
 node_t	*create_node(int data);
 node_t	*parse_list(int argc, char	**argv);
 void	ft_list_print(node_t *node, char c);
-void	ft_lstclear(node_t *head);
+void	ft_lstclear(node_t **head);
 void	ft_swap(node_t *head);
 void	ft_push(node_t **list_from, node_t **list_to);
 node_t	*ft_rotate(node_t **head);

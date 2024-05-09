@@ -3,20 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   sort.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: claferri <claferri@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cyril <cyril@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 09:18:46 by cyril             #+#    #+#             */
-/*   Updated: 2024/05/01 17:55:19 by claferri         ###   ########.fr       */
+/*   Updated: 2024/05/05 13:26:07 by cyril            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
-
-static void ft_break()
-{
-	printf("BREAK\n");
-}
-
 
 bool	is_sorted(node_t *head)
 {
@@ -68,7 +62,6 @@ node_t	*sort_three(node_t *head)
 int	find_index(node_t *head, int value)
 {
 	node_t	*current;
-	node_t	*temp;
 	int	index;
 	int max_index;
 
@@ -144,13 +137,11 @@ move_t	iterate_a(node_t *head_a, int size_a, node_t *head_b, int size_b)
 {
 	int index_a;
 	int index_b;
-	int index_min;
 	move_t moves;
 	move_t min_moves;
 	node_t *current;
 	
 	index_a = 0;
-	index_min = 0;
 	current = head_a;
 	if (!current)
 		return (init_moves(0, 0, 0, 0));
@@ -166,7 +157,7 @@ move_t	iterate_a(node_t *head_a, int size_a, node_t *head_b, int size_b)
 	return (moves);
 }
 
-node_t	*shift_list(move_t moves, node_t **head_a, node_t **head_b)
+void	shift_list(move_t moves, node_t **head_a, node_t **head_b)
 {
 	while (moves.ra && moves.rb)
 	{
@@ -197,9 +188,7 @@ node_t	*shift_list(move_t moves, node_t **head_a, node_t **head_b)
 void	sort_list(node_t *head)
 {
 	int len_a;
-	int index_a;
 	int	len_b;
-	int index_b;
 	node_t *head_b;
 	move_t moves;
 	

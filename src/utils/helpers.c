@@ -8,7 +8,7 @@ void	ft_list_print(node_t *node, char c)
 	current = node;
 	i = 0;
 	printf("%c: ", c);
-	while (current && (i == 0 | current != node))
+	while (current && (i == 0 || current != node))
 	{
 		printf("%i / ", current->data);
 		current = current->next;
