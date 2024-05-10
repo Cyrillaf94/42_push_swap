@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   intructions.c                                      :+:      :+:    :+:   */
+/*   instructions.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cyril <cyril@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 23:41:44 by cyril             #+#    #+#             */
-/*   Updated: 2024/04/01 18:49:38 by cyril            ###   ########.fr       */
+/*   Updated: 2024/05/10 12:17:17 by cyril            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@ void	ft_swap(node_t *head)
 {
 	int	temp;
 	
-	temp = head->prev->data;
-	head->prev->data = head->prev->prev->data;
-	head->prev->prev->data = temp;	
+	temp = head->data;
+	head->data = head->prev->data;
+	head->prev->data = temp;	
 }
 
 void	ft_push(node_t **list_from, node_t **list_to)
@@ -28,7 +28,10 @@ void	ft_push(node_t **list_from, node_t **list_to)
 	node_t	*node;
 
 	node = remove_node(list_from);
+	if (*list_from)
+		*list_from = (*list_from)->prev;
 	insert_node_tail(list_to, node);
+	*list_to = 	node;
 }
 
 node_t	*ft_rotate(node_t **head)

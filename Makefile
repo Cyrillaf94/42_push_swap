@@ -41,6 +41,9 @@ NAME = push_swap
 # Rules
 all: $(NAME)
 
+debug: $(OBJS)
+	$(CC) $(CFLAGS) -g -o $(BIN_PATH)/$(NAME) $^ -L$(LIB_PATH) -lftprintf -lft
+
 $(NAME): $(OBJS)
 	$(CC) $(CFLAGS) -o $(BIN_PATH)/$@ $^ -L$(LIB_PATH) -lftprintf -lft
 

@@ -1,9 +1,9 @@
 #include "push_swap.h"
 
-void	ft_list_print(node_t *node, char c)
+void	ft_list_print(const node_t *node, char c)
 {
 	int	i;
-	node_t*	current;
+	const node_t*	current;
 
 	current = node;
 	i = 0;

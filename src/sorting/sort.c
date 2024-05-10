@@ -6,7 +6,7 @@
 /*   By: cyril <cyril@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 09:18:46 by cyril             #+#    #+#             */
-/*   Updated: 2024/05/05 13:26:07 by cyril            ###   ########.fr       */
+/*   Updated: 2024/05/10 12:34:57 by cyril            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,8 +116,8 @@ move_t get_moves(int index_a, int index_b, int size_a, int size_b)
 	min_moves = INT_MAX;
 	min_i = -1;
 	moves[0] = init_moves(0, 0, index_a, index_b);
-	moves[1] = init_moves(size_a - index_a, size_b - index_b - 1, 0 , 0);
-	moves[2] = init_moves(0, size_b - index_b, index_a, 0);
+	moves[1] = init_moves(size_a - index_a - 1, size_b - index_b - 1, 0 , 0);
+	moves[2] = init_moves(0, size_b - index_b - 1, index_a, 0);
 	moves[3] = init_moves(size_a - index_a  - 1, 0, 0, index_b);
 	while (i--)
 	{
@@ -132,7 +132,7 @@ move_t get_moves(int index_a, int index_b, int size_a, int size_b)
 }
 
 // Return the least moves to pop one element of a to b
-// REMINDER: you can only pop the the tail of the list
+// REMINDER: you can only pop the the HEAD of the list (index 0)
 move_t	iterate_a(node_t *head_a, int size_a, node_t *head_b, int size_b)
 {
 	int index_a;
@@ -185,27 +185,27 @@ void	shift_list(move_t moves, node_t **head_a, node_t **head_b)
 		ft_reverse_rotate(head_b);
 }
 
-void	sort_list(node_t *head)
+void	sort_list(node_t *head_a)
 {
 	int len_a;
 	int	len_b;
 	node_t *head_b;
 	move_t moves;
 	
-	len_a = ft_list_size(head);
+	len_a = ft_list_size(head_a);
 	len_b = 0;
 	head_b = NULL;
-	while (!is_sorted(head) && len_a > 3)
+	while (!is_sorted(head_a) && len_a > 3)
 	{
 		if (len_b < 2)
-			ft_push(&head, &head_b);
+			ft_push(&head_a, &head_b);
 		else
 		{
-			moves = iterate_a(head->prev, len_a, head_b->prev, len_b);
-			shift_list(moves, &head, &head_b);
-			ft_push(&head, &head_b);
+			moves = iterate_a(head_a, len_a, head_b, len_b);
+			shift_list(moves, &head_a, &head_b);
+			ft_push(&head_a, &head_b);
 		}
-		ft_list_print(head, 'a');
+		ft_list_print(head_a, 'a');
 		ft_list_print(head_b, 'b');
 		len_a--;
 		len_b++;

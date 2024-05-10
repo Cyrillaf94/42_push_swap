@@ -6,7 +6,7 @@
 /*   By: cyril <cyril@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 23:41:54 by cyril             #+#    #+#             */
-/*   Updated: 2024/05/09 09:47:04 by cyril            ###   ########.fr       */
+/*   Updated: 2024/05/10 12:35:27 by cyril            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ node_t	*remove_node(node_t **head);
 void	insert_node_tail(node_t **head, node_t *new_node);
 node_t	*create_node(int data);
 node_t	*parse_list(int argc, char	**argv);
-void	ft_list_print(node_t *node, char c);
+void	ft_list_print(const node_t *node, char c);
 void	ft_lstclear(node_t **head);
 void	ft_swap(node_t *head);
 void	ft_push(node_t **list_from, node_t **list_to);
@@ -66,6 +66,7 @@ int		ft_abs(int a);
 void	sort_list(node_t *head);
 int	get_value_index(node_t *head, int index);
 void	*ft_calloc(size_t count, size_t size);
+bool	is_sorted(node_t *head);
 
 
 #endif

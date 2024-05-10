@@ -44,23 +44,24 @@ void	insert_node_tail(node_t **head, node_t *new_node)
 		(*head)->prev = new_node;
 	}
 }
-
-node_t	*remove_node(node_t **head)
+// Remove the head from the list, return the pointer to that node
+node_t	*remove_node(node_t **node)
 {
 	node_t	*temp;
 	
-	if (!head || !*head)
+	if (!node || !*node)
 		return (NULL);
-	if ((*head)->next == *head)
+	if ((*node)->next == *node)
 	{
-		temp = *head;
-		*head = NULL;
-	}	
+		temp = *node;
+		node = NULL;
+		return (temp);
+	}
 	else
 	{
-		temp = (*head)->prev;
-		(*head)->prev = temp->prev;
-		temp->prev->next = *head;
+		temp = *node;
+		temp->prev->next = temp->next;
+		temp->next->prev = temp->prev;
 	}
 	temp->next = temp->prev = NULL;
 	return (temp);
