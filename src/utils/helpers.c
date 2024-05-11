@@ -18,7 +18,7 @@ void	ft_list_print(const node_t *node, char c)
 }
 
 int	find_max(node_t *head)
-// Return the max index (if multiple max values, returns the greatest index)
+// Return the max index (if multiple max values, returns the min index)
 {
 	int i;
 	int max_index;
@@ -31,7 +31,7 @@ int	find_max(node_t *head)
 	max = INT_MIN;
 	while (current && (i == 0 || current != head))
 	{
-		if (current->data >= max)
+		if (current->data > max)
 		{
 			max_index = i;
 			max = current->data;

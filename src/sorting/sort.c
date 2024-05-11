@@ -6,7 +6,7 @@
 /*   By: cyril <cyril@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 09:18:46 by cyril             #+#    #+#             */
-/*   Updated: 2024/05/10 12:34:57 by cyril            ###   ########.fr       */
+/*   Updated: 2024/05/11 11:57:30 by cyril            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,23 +29,20 @@ bool	is_sorted(node_t *head)
 	return (true);
 }
 
-node_t	*sort_three(node_t *head)
+void	sort_three(node_t **head)
 {
 	int	index;
 
-	if (!is_sorted(head))
+	if (!is_sorted(*head))
 	{
-		index = find_min(head);
-		if (index == 2)
-			head = ft_reverse_rotate(&head);
+		index = find_max(*head);
+		if (index == 0)
+			ft_rotate(head);
 		else if (index == 1)
-			head = ft_rotate(&head);
-		index = find_min(head);
-		index = find_antepenultimate_min(head, index);
-		if (index == 2)
-			ft_swap(head);
+			ft_reverse_rotate(head);
+		if ((*head)->data > (*head)->next->data)
+			ft_swap(*head);
 	}
-	return (head);
 }
 
 // Algo: think of two rolls, for each element in list a, calculate the number of moves required to (1) shift list b so that it would be ordered once popped and (2) shuft list a so that the element is poppable
@@ -59,7 +56,7 @@ node_t	*sort_three(node_t *head)
 	(N.B. Head is not necessarily at min value)
 	Return the index of the item the value should precede (e.g. at the start of the list returns 0)
 */
-int	find_index(node_t *head, int value)
+int	find_index_bis(node_t *head, int value)
 {
 	node_t	*current;
 	int	index;
@@ -70,19 +67,43 @@ int	find_index(node_t *head, int value)
 	index = 0;
 	current = head;
 	max_index = find_max(head);
-	while (max_index--)
-	{
+	while (max_index-- && ++index)
 		current = current->next;
-		index++;
-	}
-	while (current->data == current->prev->data && index--)
-		current = current->prev;
 	if (!(current->data <= value || current->prev->data >= value))
 	{
 		while(!(value >= current->data) && ++index)
 			current = current->next;
 	}
 	index = index % ft_list_size(current);
+	return (index);
+}
+/* 
+	Find the corrrect position in an ordered circular list (decreasing order)
+	(N.B. Head is not necessarily at min value)
+	Return the index of the item the value should precede (e.g. at the start of the list returns 0)
+*/
+int	find_index(node_t *head, int value)
+{
+	node_t	*node;
+	int	index;
+
+	if (!head)
+		return (0);
+	index = 0;
+	node = head;
+	while (true) // in bounds
+	{
+		if (value <= node->prev->data && value >= node->data)
+			return (index);
+		if (value == node->data)
+			return (index);
+		if (node->prev->data < node->data && (value < node->prev->data || value > node->data))
+			return (index);
+		if (node == head && index > 0)
+			return (0);
+		node = node->next;
+		index++;
+	}
 	return (index);
 }
 
@@ -115,10 +136,11 @@ move_t get_moves(int index_a, int index_b, int size_a, int size_b)
 	i = 4;
 	min_moves = INT_MAX;
 	min_i = -1;
-	moves[0] = init_moves(0, 0, index_a, index_b);
-	moves[1] = init_moves(size_a - index_a - 1, size_b - index_b - 1, 0 , 0);
-	moves[2] = init_moves(0, size_b - index_b - 1, index_a, 0);
-	moves[3] = init_moves(size_a - index_a  - 1, 0, 0, index_b);
+	moves[0] = init_moves(index_a, index_b, 0 , 0);
+	moves[1] = init_moves(0, 0, (size_a - index_a) % size_a,
+							(size_b - index_b) % size_b);
+	moves[2] = init_moves(index_a, 0, (size_b - index_b) % size_b, 0);
+	moves[3] = init_moves(0, index_b, (size_a - index_a) % size_a, 0);
 	while (i--)
 	{
 		count_mov = count_moves(moves[i]);
@@ -197,19 +219,21 @@ void	sort_list(node_t *head_a)
 	head_b = NULL;
 	while (!is_sorted(head_a) && len_a > 3)
 	{
-		if (len_b < 2)
+		if (len_b < 2 && printf("pa\n"))
 			ft_push(&head_a, &head_b);
 		else
 		{
 			moves = iterate_a(head_a, len_a, head_b, len_b);
 			shift_list(moves, &head_a, &head_b);
 			ft_push(&head_a, &head_b);
+			printf("pa\n");
 		}
-		ft_list_print(head_a, 'a');
-		ft_list_print(head_b, 'b');
 		len_a--;
 		len_b++;
 	}
+	sort_three(&head_a);
+	ft_list_print(head_a, 'a');
+	ft_list_print(head_b, 'b');
 }
 
 

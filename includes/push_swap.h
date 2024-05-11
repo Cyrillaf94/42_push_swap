@@ -6,7 +6,7 @@
 /*   By: cyril <cyril@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 23:41:54 by cyril             #+#    #+#             */
-/*   Updated: 2024/05/10 12:35:27 by cyril            ###   ########.fr       */
+/*   Updated: 2024/05/11 09:35:28 by cyril            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ node_t	*ft_rotate(node_t **head);
 node_t	*ft_reverse_rotate(node_t **head);
 int		find_max(node_t *head);
 int		find_antepenultimate_max(node_t *head, int max_index);
-node_t	*sort_three(node_t *head);
+void	sort_three(node_t **head);
 int		find_min(node_t *head);
 int		find_antepenultimate_min(node_t *head, int min_index);
 int		find_index(node_t *head, int value);
@@ -64,7 +64,7 @@ int		ft_max(int a, int b);
 int		ft_min(int a, int b);
 int		ft_abs(int a);
 void	sort_list(node_t *head);
-int	get_value_index(node_t *head, int index);
+int		get_value_index(node_t *head, int index);
 void	*ft_calloc(size_t count, size_t size);
 bool	is_sorted(node_t *head);
 

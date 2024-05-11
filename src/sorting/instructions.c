@@ -6,7 +6,7 @@
 /*   By: cyril <cyril@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 23:41:44 by cyril             #+#    #+#             */
-/*   Updated: 2024/05/10 12:17:17 by cyril            ###   ########.fr       */
+/*   Updated: 2024/05/11 08:26:21 by cyril            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,20 +18,27 @@ void	ft_swap(node_t *head)
 	int	temp;
 	
 	temp = head->data;
-	head->data = head->prev->data;
-	head->prev->data = temp;	
+	head->data = head->next->data;
+	head->next->data = temp;	
 }
 
 void	ft_push(node_t **list_from, node_t **list_to)
 // For pa pb
 {
 	node_t	*node;
-
-	node = remove_node(list_from);
+	node_t	*temp;
+	
 	if (*list_from)
-		*list_from = (*list_from)->prev;
-	insert_node_tail(list_to, node);
-	*list_to = 	node;
+	{
+		temp = (*list_from)->next;
+		node = remove_node(list_from);
+		if (temp != node)
+			*list_from = temp;
+		else
+			*list_from = NULL;
+		insert_node_tail(list_to, node);
+		*list_to = (*list_to)->prev;
+	}
 }
 
 node_t	*ft_rotate(node_t **head)

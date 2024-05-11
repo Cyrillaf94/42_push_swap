@@ -54,7 +54,7 @@ node_t	*remove_node(node_t **node)
 	if ((*node)->next == *node)
 	{
 		temp = *node;
-		node = NULL;
+		*node = NULL;
 		return (temp);
 	}
 	else
@@ -86,7 +86,7 @@ void	ft_lstclear(node_t **head)
 {
 	node_t	*current;
 	
-	if (head)
+	if (head && *head)
 	{
 		current = *head;
 		current->prev->next = NULL;
