@@ -80,7 +80,7 @@ int	find_min(node_t *head)
 	min = INT_MAX;
 	while (current && (i == 0 || current != head))
 	{
-		if (current->data <= min)
+		if (current->data < min)
 		{
 			min_index = i;
 			min = current->data;

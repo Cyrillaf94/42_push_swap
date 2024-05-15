@@ -6,7 +6,7 @@
 /*   By: cyril <cyril@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 23:41:54 by cyril             #+#    #+#             */
-/*   Updated: 2024/05/11 09:35:28 by cyril            ###   ########.fr       */
+/*   Updated: 2024/05/14 19:50:23 by cyril            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,8 @@ int		find_antepenultimate_max(node_t *head, int max_index);
 void	sort_three(node_t **head);
 int		find_min(node_t *head);
 int		find_antepenultimate_min(node_t *head, int min_index);
-int		find_index(node_t *head, int value);
+int		find_index_dec(node_t *head, int value);
+int		find_index_inc(node_t *head, int value);
 int		ft_list_size(node_t *node);
 int		ft_max(int a, int b);
 int		ft_min(int a, int b);

@@ -6,7 +6,7 @@
 /*   By: cyril <cyril@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 23:41:44 by cyril             #+#    #+#             */
-/*   Updated: 2024/05/11 08:26:21 by cyril            ###   ########.fr       */
+/*   Updated: 2024/05/14 20:21:40 by cyril            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ node_t	*ft_rotate(node_t **head)
 node_t	*ft_reverse_rotate(node_t **head)
 // For rra rrb
 {
-	*head = (*head)->prev;
+	if (head && *head)
+		*head = (*head)->prev;
 	return (*head);
 }

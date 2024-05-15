@@ -3,7 +3,7 @@
 static void test_empty_list() 
 {
 	node_t *head = NULL;
-	CU_ASSERT_EQUAL(find_index(head, -2), 0);
+	CU_ASSERT_EQUAL(find_index_dec(head, -2), 0);
 }
 
 static void test_list_length_one() 
@@ -12,7 +12,7 @@ static void test_list_length_one()
 	insert_node_tail(&head, create_node(2));
 	int test_values[] = {-2, 0, 6, 8, 12};
 	for (int i = 0; i < 5; i++) {
-		CU_ASSERT_EQUAL(find_index(head, test_values[i]), 0);
+		CU_ASSERT_EQUAL(find_index_dec(head, test_values[i]), 0);
 	}
 	ft_lstclear(&head);
 }
@@ -25,7 +25,7 @@ static void test_list_length_two()
 	int test_values[] = {-2, 0, 6, 8, 12};
 	int expected_index_2[] = {1, 1, 0, 0, 1};
 	for (int i = 0; i < 5; i++) {
-		CU_ASSERT_EQUAL(find_index(head, test_values[i]), expected_index_2[i]);
+		CU_ASSERT_EQUAL(find_index_dec(head, test_values[i]), expected_index_2[i]);
 	}
 	ft_lstclear(&head);
 }
@@ -39,7 +39,7 @@ static void test_list_length_three()
 	int test_values[] = {-2, 0, 6, 8, 12};
 	int expected_index_3[] = {1, 1, 0, 0, 1};
 	for (int i = 0; i < 5; i++) {
-		CU_ASSERT_EQUAL(find_index(head, test_values[i]), expected_index_3[i]);
+		CU_ASSERT_EQUAL(find_index_dec(head, test_values[i]), expected_index_3[i]);
 	}
 	ft_lstclear(&head);
 }
@@ -54,7 +54,7 @@ static void test_list_length_four()
 	int test_values[] = {-2, 0, 2, 6, 12};
 	int expected_index_3[] = {1, 1, 0, 3, 1};
 	for (int i = 0; i < 5; i++) {
-		CU_ASSERT_EQUAL(find_index(head, test_values[i]), expected_index_3[i]);
+		CU_ASSERT_EQUAL(find_index_dec(head, test_values[i]), expected_index_3[i]);
 	}
 	ft_lstclear(&head);
 }
@@ -71,7 +71,7 @@ static void tests_list_large()
 	int expected_index_large_bis[] =  {45, 75, 30};
 	for (int i = 0; i < 3; i++)
 	{
-		CU_ASSERT_EQUAL(find_index(head, test_values_bis[i]), expected_index_large_bis[i]);
+		CU_ASSERT_EQUAL(find_index_dec(head, test_values_bis[i]), expected_index_large_bis[i]);
 	}
 
 	// Shift list to test if head is not at max value
@@ -81,7 +81,7 @@ static void tests_list_large()
 	int expected_index_large[] =  {145, 175, 130};
 	for (int i = 0; i < 3; i++)
 	{
-		CU_ASSERT_EQUAL(find_index(head, test_values[i]), expected_index_large[i]);
+		CU_ASSERT_EQUAL(find_index_dec(head, test_values[i]), expected_index_large[i]);
 	}
 	ft_lstclear(&head);
 }

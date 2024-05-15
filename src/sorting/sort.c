@@ -6,7 +6,7 @@
 /*   By: cyril <cyril@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 09:18:46 by cyril             #+#    #+#             */
-/*   Updated: 2024/05/11 11:57:30 by cyril            ###   ########.fr       */
+/*   Updated: 2024/05/14 21:15:22 by cyril            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ int	find_index_bis(node_t *head, int value)
 	(N.B. Head is not necessarily at min value)
 	Return the index of the item the value should precede (e.g. at the start of the list returns 0)
 */
-int	find_index(node_t *head, int value)
+int	find_index_dec(node_t *head, int value)
 {
 	node_t	*node;
 	int	index;
@@ -98,6 +98,36 @@ int	find_index(node_t *head, int value)
 		if (value == node->data)
 			return (index);
 		if (node->prev->data < node->data && (value < node->prev->data || value > node->data))
+			return (index);
+		if (node == head && index > 0)
+			return (0);
+		node = node->next;
+		index++;
+	}
+	return (index);
+}
+
+/* 
+	Find the corrrect position in an ordered circular list (decreasing order)
+	(N.B. Head is not necessarily at min value)
+	Return the index of the item the value should precede (e.g. at the start of the list returns 0)
+*/
+int	find_index_inc(node_t *head, int value)
+{
+	node_t	*node;
+	int	index;
+
+	if (!head)
+		return (0);
+	index = 0;
+	node = head;
+	while (true)
+	{
+		if (value >= node->prev->data && value <= node->data)
+			return (index);
+		if (value == node->data)
+			return (index);
+		if (node->prev->data > node->data && (value > node->prev->data || value < node->data))
 			return (index);
 		if (node == head && index > 0)
 			return (0);
@@ -133,7 +163,7 @@ move_t get_moves(int index_a, int index_b, int size_a, int size_b)
 	int min_moves;
 	int count_mov;
 
-	i = 4;
+	i = 0;
 	min_moves = INT_MAX;
 	min_i = -1;
 	moves[0] = init_moves(index_a, index_b, 0 , 0);
@@ -141,7 +171,7 @@ move_t get_moves(int index_a, int index_b, int size_a, int size_b)
 							(size_b - index_b) % size_b);
 	moves[2] = init_moves(index_a, 0, (size_b - index_b) % size_b, 0);
 	moves[3] = init_moves(0, index_b, (size_a - index_a) % size_a, 0);
-	while (i--)
+	while (i <= 3)
 	{
 		count_mov = count_moves(moves[i]);
 		if (count_mov < min_moves)
@@ -149,34 +179,38 @@ move_t get_moves(int index_a, int index_b, int size_a, int size_b)
 			min_moves = count_mov;
 			min_i = i;
 		}
+		i++;
 	}
 	return (moves[min_i]);
 }
 
 // Return the least moves to pop one element of a to b
 // REMINDER: you can only pop the the HEAD of the list (index 0)
-move_t	iterate_a(node_t *head_a, int size_a, node_t *head_b, int size_b)
+move_t	iter_list(node_t *head_a, int size_a, node_t *head_b, int size_b, 
+int (*find_index)(node_t *, int))
 {
 	int index_a;
 	int index_b;
 	move_t moves;
-	move_t min_moves;
+	int min_moves;
+	move_t min_move;
 	node_t *current;
 	
 	index_a = 0;
 	current = head_a;
 	if (!current)
 		return (init_moves(0, 0, 0, 0));
+	min_moves = INT_MAX;
 	while (index_a == 0 || current != head_a)
 	{
 		index_b = find_index(head_b, current->data);
 		moves = get_moves(index_a, index_b, size_a, size_b);
-		if (index_a > 0  && count_moves(moves) < count_moves(min_moves))
-			min_moves = moves;
+		if (count_moves(moves) < min_moves)
+			min_move = moves;
 		index_a++;
 		current = current->next;
 	}
-	return (moves);
+	return (min_move);
 }
 
 void	shift_list(move_t moves, node_t **head_a, node_t **head_b)
@@ -223,7 +257,7 @@ void	sort_list(node_t *head_a)
 			ft_push(&head_a, &head_b);
 		else
 		{
-			moves = iterate_a(head_a, len_a, head_b, len_b);
+			moves = iter_list(head_a, len_a, head_b, len_b, &find_index_dec);
 			shift_list(moves, &head_a, &head_b);
 			ft_push(&head_a, &head_b);
 			printf("pa\n");
@@ -232,6 +266,30 @@ void	sort_list(node_t *head_a)
 		len_b++;
 	}
 	sort_three(&head_a);
+	ft_list_print(head_a, 'a');
+	ft_list_print(head_b, 'b');
+	while (len_b)
+	{
+		moves = iter_list(head_b, len_b, head_a, len_a, &find_index_inc);
+		shift_list(moves, &head_b, &head_a);
+		ft_push(&head_b, &head_a);
+		printf("pb\n");
+		len_b--;
+		len_a++;
+	}
+	int max_a = find_min(head_a);
+	if (max_a - find_max(head_a) == 0)
+		return;
+	while(max_a--)
+	{
+		ft_rotate(&head_a);
+		printf("ra\n");
+	}
+	while(head_a->data >= head_a->prev->data)
+	{
+		ft_reverse_rotate(&head_a);
+		printf("rra\n");
+	}
 	ft_list_print(head_a, 'a');
 	ft_list_print(head_b, 'b');
 }
