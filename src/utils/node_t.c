@@ -44,13 +44,15 @@ void	insert_node_tail(node_t **head, node_t *new_node)
 		(*head)->prev = new_node;
 	}
 }
-// Remove the head from the list, return the pointer to that node
+// Remove a node from the list, return the pointer to that node, 
+// nullify the pointer of pointer if list is empty
 node_t	*remove_node(node_t **node)
 {
 	node_t	*temp;
 	
 	if (!node || !*node)
 		return (NULL);
+	temp = *node;
 	if ((*node)->next == *node)
 	{
 		temp = *node;
@@ -59,7 +61,6 @@ node_t	*remove_node(node_t **node)
 	}
 	else
 	{
-		temp = *node;
 		temp->prev->next = temp->next;
 		temp->next->prev = temp->prev;
 	}
@@ -82,7 +83,7 @@ int	ft_list_size(node_t *node)
 	return (i);
 }
 
-void	ft_lstclear(node_t **head)
+void	ft_lstclear_circular(node_t **head)
 {
 	node_t	*current;
 	

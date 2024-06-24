@@ -1,42 +1,54 @@
-#include "push_swap.h" 
+#include "push_swap.h"
 
-int	ft_isspace(int c)
+static int	*ft_get_int(const char *str)
 {
-	if (c == ' ' || (c >= '\t' && c <= '\r'))
-		return (1);
-	return (0);
-}
+	int		*value;
+	bool	is_neg;
 
-int	ft_isdigit(int c)
-{
-	return (c >= '0' && c <= '9');
-}
-
-int	ft_atoi(const char *str)
-{
-	unsigned int	i;
-	int				atoi;
-
-	atoi = 0;
-	i = 0;
-	while (ft_isspace(*str))
-		str++;
-	if (*str == '+' || *str == '-')
+	is_neg = false;
+	if (*str == '-' && *str++)
+		is_neg = true;
+	if (!*str)
+		return (NULL);
+	value = ft_calloc(1, sizeof(long long));
+	if(!value)
+		return (NULL);
+	while (ft_isdigit(*str) && *value < INT_MAX)
+		*value = *value * 10 + *str++ - '0';
+	if (is_neg)
+		*value *= -1;
+	if (*str)
 	{
-		if (*str++ == '-')
-			i++;
+		free(value);
+		return (NULL);
 	}
-	while (ft_isdigit(*str))
-		atoi = atoi * 10 + *str++ - '0';
-	if (i % 2)
-		atoi *= -1;
-	return (atoi);
+	return (value);
 }
+
+static bool	is_valid(int *value, node_t *head)
+{
+	node_t *current;
+
+	current = head;
+	if (value == NULL)
+		return (false);
+	if (current == NULL)
+		return (true);
+	while (true)
+	{
+		if (current->data == *value)
+			return (false);
+		if (current->next == head)
+			return (true);
+		current = current->next;
+	}
+}
+
 
 node_t	*parse_list(int argc, char	**argv)
 {
-	int	value;
-	int argn;
+	int		*value;
+	int 	argn;
 	node_t	*node;
 	node_t	*head;
 
@@ -44,10 +56,20 @@ node_t	*parse_list(int argc, char	**argv)
 	head = NULL;
 	while (argn < argc)
 	{
-		value = ft_atoi(argv[argn]);
-		node = create_node(value);
-		insert_node_tail(&head, node);
-		argn++;
+		value = ft_get_int(argv[argn]);
+		if (is_valid(value, head))
+		{
+			node = create_node(*value);
+			insert_node_tail(&head, node);
+			argn++;
+		}
+		else
+		{
+			ft_lstclear_circular(&head);
+			argn = argc;
+		}
+		if (value)
+			free(value);
 	}
 	return (head);
 }

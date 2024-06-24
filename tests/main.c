@@ -22,7 +22,8 @@ int main()
 
     // Add List Suite
     if (add_lists_tests() != CUE_SUCCESS || add_instructions_tests() != CUE_SUCCESS||
-	add_index_tests() != CUE_SUCCESS || add_sort_tests() != CUE_SUCCESS)
+		add_index_tests() != CUE_SUCCESS || add_sort_tests() != CUE_SUCCESS ||
+		add_parsing_tests() != CUE_SUCCESS)
 	{
         CU_cleanup_registry();
         return CU_get_error();

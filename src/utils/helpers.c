@@ -114,12 +114,3 @@ int	find_antepenultimate_min(node_t *head, int min_index)
 	}
 	return (antepenultimate_index);
 }
-
-int	get_value_index(node_t *head, int index)
-{
-	while (head && index--)
-	{
-		head = head->next;
-	}
-	return (head->data);
-}

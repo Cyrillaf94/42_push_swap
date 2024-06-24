@@ -26,7 +26,7 @@ static void test_insert_node_tail(void)
 	CU_ASSERT_PTR_EQUAL(head->prev, node2);
 	CU_ASSERT_PTR_EQUAL(node1->prev, node2);
 	CU_ASSERT_PTR_EQUAL(node2->next, head);
-	ft_lstclear(&head);
+	ft_lstclear_circular(&head);
 }
 
 
@@ -51,13 +51,13 @@ static void test_ft_list_size(void)
 	free(node1);
 }
 
-// Test case for ft_lstclear function
-static void test_ft_lstclear(void)
+// Test case for ft_lstclear_circular function
+static void test_ft_lstclear_circular(void)
 {
 	node_t *head = NULL;
 	node_t *node1 = create_node(10);
 	insert_node_tail(&head, node1);
-	ft_lstclear(&head);
+	ft_lstclear_circular(&head);
 	CU_ASSERT_PTR_NULL(head);
 }
 
@@ -73,7 +73,7 @@ int add_lists_tests(void)
 	CU_add_test(pSuite, "test of insert_node_tail()", test_insert_node_tail);
 	CU_add_test(pSuite, "test of remove_node()", test_remove_node);
 	CU_add_test(pSuite, "test of ft_list_size()", test_ft_list_size);
-	CU_add_test(pSuite, "test of ft_lstclear()", test_ft_lstclear);
+	CU_add_test(pSuite, "test of ft_lstclear_circular()", test_ft_lstclear_circular);
 
 	return CU_get_error();
 }

@@ -6,7 +6,7 @@
 /*   By: cyril <cyril@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 10:20:27 by cyril             #+#    #+#             */
-/*   Updated: 2024/05/11 07:35:55 by cyril            ###   ########.fr       */
+/*   Updated: 2024/06/01 16:00:46 by cyril            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,3 +22,4 @@ int add_lists_tests(void);
 int add_instructions_tests(void);
 int add_index_tests(void);
 int add_sort_tests(void);
+int add_parsing_tests(void);

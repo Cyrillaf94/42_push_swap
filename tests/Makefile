@@ -2,7 +2,7 @@ CC := cc
 CFLAGS := -g3 -Wall -Wextra -Werror
 
 NAME := test_suite
-SOURCE_FILES := ../src/*/*.c lists.c instructions.c index.c sort.c main.c
+SOURCE_FILES := ../src/*/*.c lists.c instructions.c index.c sort.c main.c parsing.c
 
 all: run clean
 
