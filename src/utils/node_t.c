@@ -12,22 +12,23 @@
 
 #include "push_swap.h"
 
-node_t	*create_node(int data) 
+t_node	*create_node(int data)
 {
-    node_t* new_node;
-	new_node = (node_t*)malloc(sizeof(node_t));
+	t_node	*new_node;
+
+	new_node = (t_node *) malloc(sizeof(t_node));
 	if (new_node)
 	{
 		new_node->data = data;
 		new_node->next = NULL;
 		new_node->prev = NULL;
 	}
-	return new_node;
+	return (new_node);
 }
 
-void	insert_node_tail(node_t **head, node_t *new_node)
+void	insert_node_tail(t_node **head, t_node *new_node)
 {
-	node_t *tail;
+	t_node	*tail;
 
 	if (!(*head))
 	{
@@ -44,12 +45,13 @@ void	insert_node_tail(node_t **head, node_t *new_node)
 		(*head)->prev = new_node;
 	}
 }
+
 // Remove a node from the list, return the pointer to that node, 
 // nullify the pointer of pointer if list is empty
-node_t	*remove_node(node_t **node)
+t_node	*remove_node(t_node **node)
 {
-	node_t	*temp;
-	
+	t_node	*temp;
+
 	if (!node || !*node)
 		return (NULL);
 	temp = *node;
@@ -64,18 +66,19 @@ node_t	*remove_node(node_t **node)
 		temp->prev->next = temp->next;
 		temp->next->prev = temp->prev;
 	}
-	temp->next = temp->prev = NULL;
+	temp->next = NULL;
+	temp->prev = NULL;
 	return (temp);
 }
 
-int	ft_list_size(node_t *node)
+int	ft_list_size(t_node *node)
 {
-	int	i;
-	node_t*	current;
+	int		i;
+	t_node	*current;
 
 	i = 0;
 	current = node;
-	while (current && (i==0 || current != node))
+	while (current && (i == 0 || current != node))
 	{
 		i++;
 		current = current->next;
@@ -83,10 +86,10 @@ int	ft_list_size(node_t *node)
 	return (i);
 }
 
-void	ft_lstclear_circular(node_t **head)
+void	ft_lstclear_circular(t_node **head)
 {
-	node_t	*current;
-	
+	t_node	*current;
+
 	if (head && *head)
 	{
 		current = *head;
@@ -100,4 +103,3 @@ void	ft_lstclear_circular(node_t **head)
 		*head = NULL;
 	}
 }
-

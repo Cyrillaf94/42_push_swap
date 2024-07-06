@@ -6,19 +6,18 @@
 /*   By: cyril <cyril@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 23:41:44 by cyril             #+#    #+#             */
-/*   Updated: 2024/06/24 21:03:11 by cyril            ###   ########.fr       */
+/*   Updated: 2024/07/06 19:36:41 by cyril            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-
 // Push the last_element of list_from to be the last element of list_to
-void	ft_push(node_t **list_from, node_t **list_to, char c)
+void	ft_push(t_node **list_from, t_node **list_to, char c)
 {
-	node_t	*node;
+	t_node	*node;
 	char	str[3];
-	
+
 	if (*list_from)
 	{
 		node = remove_node(&(*list_from)->prev);
@@ -27,26 +26,25 @@ void	ft_push(node_t **list_from, node_t **list_to, char c)
 		insert_node_tail(list_to, node);
 	}
 	str[0] = 'p';
-	str[2] = c;
-	str[3] = '\n';
-	write(1, str, 2);
+	str[1] = c;
+	str[2] = '\n';
+	write(1, str, 3);
 }
 
-
 // Swap the top two elements of a list
-node_t	*ft_swap(node_t **head)
+t_node	*ft_swap(t_node **head)
 {
 	int	temp;
-	
+
 	if (!head || !*head)
 		return (NULL);
 	temp = (*head)->prev->data;
 	(*head)->prev->data = (*head)->prev->prev->data;
 	(*head)->prev->data = temp;
-	return (*head);	
+	return (*head);
 }
 
-node_t	*ft_rotate(node_t **head)
+t_node	*ft_rotate(t_node **head)
 // For ra rb
 {
 	if (!head || !*head)
@@ -55,7 +53,7 @@ node_t	*ft_rotate(node_t **head)
 	return (*head);
 }
 
-node_t	*ft_reverse_rotate(node_t **head)
+t_node	*ft_reverse_rotate(t_node **head)
 // For rra rrb
 {
 	if (!head || !*head)
@@ -65,7 +63,8 @@ node_t	*ft_reverse_rotate(node_t **head)
 }
 
 // In case an instruction can be applied to both lists at the same time
-void ft_dispatch_instruct(node_t **head_a, node_t **head_b, node_t * (instruction)(node_t **))
+void	ft_instruct(t_node **head_a, t_node **head_b,
+							t_node *(instruction)(t_node**))
 {
 	if ((!head_a && !head_b) || !instruction)
 		return ;

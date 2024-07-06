@@ -1,9 +1,21 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parse_list.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cyril <cyril@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/07/06 18:34:16 by cyril             #+#    #+#             */
+/*   Updated: 2024/07/06 18:44:53 by cyril            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "push_swap.h"
 
 static int	*ft_get_int(const char *str)
 {
 	int		*value;
-	bool	is_neg;
+	t_bool	is_neg;
 
 	is_neg = false;
 	if (*str == '-' && *str++)
@@ -11,7 +23,7 @@ static int	*ft_get_int(const char *str)
 	if (!*str)
 		return (NULL);
 	value = ft_calloc(1, sizeof(long long));
-	if(!value)
+	if (!value)
 		return (NULL);
 	while (ft_isdigit(*str) && *value < INT_MAX)
 		*value = *value * 10 + *str++ - '0';
@@ -25,9 +37,9 @@ static int	*ft_get_int(const char *str)
 	return (value);
 }
 
-static bool	is_valid(int *value, node_t *head)
+static t_bool	is_valid(int *value, t_node *head)
 {
-	node_t *current;
+	t_node	*current;
 
 	current = head;
 	if (value == NULL)
@@ -44,13 +56,12 @@ static bool	is_valid(int *value, node_t *head)
 	}
 }
 
-
-node_t	*parse_list(int argc, char	**argv)
+t_node	*parse_list(int argc, char	**argv)
 {
 	int		*value;
-	int 	argn;
-	node_t	*node;
-	node_t	*head;
+	int		argn;
+	t_node	*node;
+	t_node	*head;
 
 	argn = 1;
 	head = NULL;

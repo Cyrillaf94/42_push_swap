@@ -6,67 +6,73 @@
 /*   By: cyril <cyril@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 23:41:54 by cyril             #+#    #+#             */
-/*   Updated: 2024/06/24 21:02:54 by cyril            ###   ########.fr       */
+/*   Updated: 2024/07/06 20:54:57 by cyril            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PUSH_SWAP_H
-#define PUSH_SWAP_H
+# define PUSH_SWAP_H
 
+# include <unistd.h>
+# include <stdlib.h>
+# include <stdio.h>
+# include "libft.h"
+# include "libftprintf.h"
 
-#include <unistd.h>  // For read(), write()
-#include <stdlib.h>  // For malloc(), free(), exit()
-#include <stdio.h>   // for printf
-#include "libft.h"
-#include "libftprintf.h"
+# ifndef INT_MIN
+#  define INT_MIN -2147483648
+# endif
 
-#ifndef INT_MIN
-#define INT_MIN (-2147483647 - 1)
-#endif
+# ifndef INT_MAX
+#  define INT_MAX 2147483647
+# endif
 
-#ifndef INT_MAX
-#define INT_MAX 2147483647
-#endif
-
-typedef enum {
-    false,
-    true
-} bool;
+typedef enum e_bool{
+	false,
+	true
+}	t_bool;
 
 typedef struct node {
-    int data;
-    struct node* next;
-    struct node* prev;
-} node_t;
+	int			data;
+	struct node	*next;
+	struct node	*prev;
+}	t_node;
 
 typedef struct move {
-    int ra; // Shift up all elements of stack a by 1 - The first element becomes the last one.
-    int rb;
-	int rra; // Shift down all elements of stack a by 1 - The last element becomes the first one.
-	int rrb;
-} move_t;
+	int	ra;
+	int	rb;
+	int	rra;
+	int	rrb;
+}	t_move;
 
-node_t	*remove_node(node_t **head);
-void	insert_node_tail(node_t **head, node_t *new_node);
-node_t	*create_node(int data);
-node_t	*parse_list(int argc, char	**argv);
-void	ft_list_print(const node_t *node, char c);
-void	ft_lstclear_circular(node_t **head);
-void	ft_push(node_t **list_from, node_t **list_to, char c);
-node_t	*ft_swap(node_t **head);
-node_t	*ft_rotate(node_t **head);
-node_t	*ft_reverse_rotate(node_t **head);
-void	ft_dispatch_instruct(node_t **head_a, node_t **head_b, node_t * (instruction)(node_t **));
-int		find_max(node_t *head);
-int		find_antepenultimate_max(node_t *head, int max_index);
-void	sort_three(node_t **head);
-int		find_min(node_t *head);
-int		find_antepenultimate_min(node_t *head, int min_index);
-int		find_index_dec(node_t *head, int value);
-int		find_index_inc(node_t *head, int value);
-int		ft_list_size(node_t *node);
-void	sort_list(node_t *head, int list_size);
-bool	is_sorted(node_t *head);
+// Parsing
+t_node	*parse_list(int argc, char	**argv);
 
+// List
+t_node	*remove_node(t_node **head);
+void	insert_node_tail(t_node **head, t_node *new_node);
+t_node	*create_node(int data);
+void	ft_lstclear_circular(t_node **head);
+int		ft_list_size(t_node *node);
+void	ft_list_print(const t_node *node, char c);
+int		find_max(t_node *head);
+int		find_min(t_node *head);
+t_node	*parse_list(int argc, char	**argv);
+
+// Instructions
+void	ft_push(t_node **list_from, t_node **list_to, char c);
+t_node	*ft_swap(t_node **head);
+t_node	*ft_rotate(t_node **head);
+t_node	*ft_reverse_rotate(t_node **head);
+void	ft_instruct(t_node **a, t_node **b, t_node *(instruction)(t_node **));
+
+// Sorting
+t_move	iter_list(t_node *a, t_node *b, int (*find_index)(t_node *, int));
+int		find_index_dec(t_node *head, int value);
+int		find_index_inc(t_node *head, int value);
+void	rr_list(t_move moves, t_node **list_from, t_node **list_to, char c);
+void	r_list(t_move moves, t_node **list_from, t_node **list_to, char c);
+t_bool	is_sorted(t_node *head);
+void	sort_list(t_node *head, int list_size);
 
 #endif

@@ -17,7 +17,7 @@ OBJ_PATHS := $(addprefix $(OBJ_PATH)/, $(SOURCE_DIRS))
 
 # Source files
 PARSING_FILES := parse_list.c
-SORTING_FILES := instructions.c  sort.c
+SORTING_FILES := instructions.c moves.c sort_helpers.c sort.c
 UTILS_FILES := helpers.c node_t.c stdlib.c
 
 # Concatenating source files with directories
